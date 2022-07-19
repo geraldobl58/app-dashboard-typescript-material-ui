@@ -1,13 +1,14 @@
-import Main from 'components/Main'
+import { BrowserRouter } from 'react-router-dom'
 
 import GlobalStyles from 'styles/global'
+import { AppRoutes } from 'routes'
 
 function App() {
   return (
-    <>
+    <BrowserRouter>
       <GlobalStyles />
-      <Main />
-    </>
+      <AppRoutes />
+    </BrowserRouter>
   )
 }
 
