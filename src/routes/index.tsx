@@ -1,11 +1,11 @@
 import { Navigate, Route, Routes } from 'react-router-dom'
 
-import Main from 'components/Main'
+import Home from 'pages/Home'
 
 export const AppRoutes = () => {
   return (
     <Routes>
-      <Route path="/" element={<Main />} />
+      <Route path="/" element={<Home />} />
       <Route path="*" element={<Navigate to="/" />} />
     </Routes>
   )

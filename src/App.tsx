@@ -1,19 +1,19 @@
 import { BrowserRouter } from 'react-router-dom'
 
 import GlobalStyles from 'styles/global'
-import { AppRoutes } from 'routes'
-import { ThemeProvider } from '@mui/material'
 
-import { LightTheme } from 'styles/theme/light'
+import { AppRoutes } from 'routes'
+
+import { AppThemeProvider } from 'contexts/ThemeContext'
 
 function App() {
   return (
-    <ThemeProvider theme={LightTheme}>
+    <AppThemeProvider>
       <BrowserRouter>
         <GlobalStyles />
         <AppRoutes />
       </BrowserRouter>
-    </ThemeProvider>
+    </AppThemeProvider>
   )
 }
 
