@@ -6,12 +6,16 @@ import { AppRoutes } from 'routes'
 
 import { AppThemeProvider } from 'contexts/ThemeContext'
 
+import { AppShell } from 'components/AppShell'
+
 function App() {
   return (
     <AppThemeProvider>
       <BrowserRouter>
         <GlobalStyles />
-        <AppRoutes />
+        <AppShell>
+          <AppRoutes />
+        </AppShell>
       </BrowserRouter>
     </AppThemeProvider>
   )
