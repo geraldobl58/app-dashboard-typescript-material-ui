@@ -4,9 +4,6 @@ import {
   Divider,
   Drawer,
   List,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
   Typography,
   useTheme
 } from '@mui/material'
@@ -17,6 +14,8 @@ import ExitToAppIcon from '@mui/icons-material/ExitToApp'
 import GridViewIcon from '@mui/icons-material/GridView'
 
 import { useAppThemeContext } from 'contexts/ThemeContext'
+
+import { MenuLinks } from 'components/MenuLinks'
 
 type MenuProps = {
   children: React.ReactNode
@@ -76,12 +75,7 @@ export function AppShell({ children }: MenuProps) {
           <Divider />
           <Box flex={1}>
             <List component="nav">
-              <ListItemButton>
-                <ListItemIcon>
-                  <GridViewIcon />
-                </ListItemIcon>
-                <ListItemText primary="Dashboard" />
-              </ListItemButton>
+              <MenuLinks to="/" icon={<GridViewIcon />} label="Dashboard" />
             </List>
           </Box>
           <Divider />
