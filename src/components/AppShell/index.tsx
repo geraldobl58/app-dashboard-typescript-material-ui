@@ -11,11 +11,11 @@ import {
 import LightModeIcon from '@mui/icons-material/LightMode'
 import NightlightIcon from '@mui/icons-material/Nightlight'
 import ExitToAppIcon from '@mui/icons-material/ExitToApp'
-import GridViewIcon from '@mui/icons-material/GridView'
 
 import { useAppThemeContext } from 'contexts/ThemeContext'
 
 import { MenuLinks } from 'components/MenuLinks'
+import { useDrawerContext } from 'contexts/DrawerContext'
 
 type MenuProps = {
   children: React.ReactNode
@@ -23,7 +23,10 @@ type MenuProps = {
 
 export function AppShell({ children }: MenuProps) {
   const theme = useTheme()
+
   const { toggleTheme, themeName } = useAppThemeContext()
+
+  const { drawerOptions } = useDrawerContext()
 
   return (
     <>
@@ -75,7 +78,14 @@ export function AppShell({ children }: MenuProps) {
           <Divider />
           <Box flex={1}>
             <List component="nav">
-              <MenuLinks to="/" icon={<GridViewIcon />} label="Dashboard" />
+              {drawerOptions.map((item) => (
+                <MenuLinks
+                  key={item.path}
+                  to={item.path}
+                  icon={item.icon}
+                  label={item.label}
+                />
+              ))}
             </List>
           </Box>
           <Divider />
