@@ -1,5 +1,15 @@
+import { Base } from 'templates/Base'
+import HomeTemplate from 'templates/Home'
+
+import { AppBarTool } from 'components/AppBarTool'
+
 const Home = () => {
-  return <h1>Home</h1>
+  return (
+    <Base>
+      <AppBarTool title="Homepage" />
+      <HomeTemplate />
+    </Base>
+  )
 }
 
 export default Home

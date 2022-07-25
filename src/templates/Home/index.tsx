@@ -1,3 +1,9 @@
-const Home = () => <h1>Homepage</h1>
+import { Base } from 'templates/Base'
 
-export default Home
+const HomeTemplate = () => (
+  <Base>
+    <h1>HomepageTemplate</h1>
+  </Base>
+)
+
+export default HomeTemplate

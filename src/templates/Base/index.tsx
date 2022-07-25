@@ -5,5 +5,9 @@ type BaseProps = {
 }
 
 export function Base({ children }: BaseProps) {
-  return <Box>{children}</Box>
+  return (
+    <Box height="100%" display="flex" flexDirection="column">
+      {children}
+    </Box>
+  )
 }
