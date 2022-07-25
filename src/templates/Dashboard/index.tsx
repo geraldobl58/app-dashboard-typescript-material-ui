@@ -1,9 +1,13 @@
+import { Typography } from '@mui/material'
+
 import { Base } from 'templates/Base'
 
 export function DashboardTemplate() {
   return (
     <Base>
-      <h1>DashboardTemplate</h1>
+      <Typography variant="h6" component="div">
+        DashboardTemplate
+      </Typography>
     </Base>
   )
 }

@@ -1,8 +1,19 @@
 import { Link } from 'react-router-dom'
-import { Avatar, Box, Divider, Drawer, List, useTheme } from '@mui/material'
+import {
+  Avatar,
+  Box,
+  Divider,
+  Drawer,
+  List,
+  Typography,
+  useTheme
+} from '@mui/material'
 
+import LightModeIcon from '@mui/icons-material/LightMode'
+import NightlightIcon from '@mui/icons-material/Nightlight'
 import ExitToAppIcon from '@mui/icons-material/ExitToApp'
 
+import { useAppThemeContext } from 'contexts/ThemeContext'
 import { useDrawerContext } from 'contexts/DrawerContext'
 
 import { MenuLinks } from 'components/MenuLinks'
@@ -13,6 +24,8 @@ type MenuProps = {
 
 export function AppShell({ children }: MenuProps) {
   const theme = useTheme()
+
+  const { toggleTheme, themeName } = useAppThemeContext()
 
   const { drawerOptions } = useDrawerContext()
 
@@ -35,6 +48,35 @@ export function AppShell({ children }: MenuProps) {
             <Link to="/">
               <Avatar src="https://cdn.icon-icons.com/icons2/2699/PNG/512/atlassian_jira_logo_icon_170511.png" />
             </Link>
+            {themeName === 'light' ? (
+              <Box display="block" textAlign="right">
+                <Typography variant="button" display="block" gutterBottom>
+                  Dark Theme
+                </Typography>
+                <NightlightIcon
+                  sx={{ fontSize: 20 }}
+                  onClick={toggleTheme}
+                  color="primary"
+                  style={{ cursor: 'pointer' }}
+                />
+              </Box>
+            ) : (
+              <Box display="block" textAlign="right">
+                <Typography
+                  variant="button"
+                  display="block"
+                  gutterBottom
+                  style={{ color: '#fff' }}
+                >
+                  Light Theme
+                </Typography>
+                <LightModeIcon
+                  sx={{ fontSize: 20 }}
+                  onClick={toggleTheme}
+                  style={{ cursor: 'pointer', color: '#fff' }}
+                />
+              </Box>
+            )}
           </Box>
           <Divider />
           <Box flex={1}>
@@ -61,7 +103,8 @@ export function AppShell({ children }: MenuProps) {
             <ExitToAppIcon
               sx={{ fontSize: 20 }}
               style={{
-                cursor: 'pointer'
+                cursor: 'pointer',
+                color: themeName === 'light' ? '#222' : '#FFF'
               }}
             />
           </Box>

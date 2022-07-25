@@ -1,8 +1,12 @@
+import { Typography } from '@mui/material'
+
 import { Base } from 'templates/Base'
 
 const HomeTemplate = () => (
   <Base>
-    <h1>HomepageTemplate</h1>
+    <Typography variant="h6" component="div">
+      HomepageTemplate
+    </Typography>
   </Base>
 )
 
