@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import {
   Avatar,
   Box,
@@ -13,9 +14,9 @@ import NightlightIcon from '@mui/icons-material/Nightlight'
 import ExitToAppIcon from '@mui/icons-material/ExitToApp'
 
 import { useAppThemeContext } from 'contexts/ThemeContext'
+import { useDrawerContext } from 'contexts/DrawerContext'
 
 import { MenuLinks } from 'components/MenuLinks'
-import { useDrawerContext } from 'contexts/DrawerContext'
 
 type MenuProps = {
   children: React.ReactNode
@@ -32,7 +33,7 @@ export function AppShell({ children }: MenuProps) {
     <>
       <Drawer variant="permanent">
         <Box
-          width={theme.spacing(28)}
+          width={theme.spacing(35)}
           height="100%"
           display="flex"
           flexDirection="column"
@@ -44,7 +45,9 @@ export function AppShell({ children }: MenuProps) {
             justifyContent="space-between"
             p={2}
           >
-            <Avatar src="https://cdn.icon-icons.com/icons2/2699/PNG/512/atlassian_jira_logo_icon_170511.png" />
+            <Link to="/">
+              <Avatar src="https://cdn.icon-icons.com/icons2/2699/PNG/512/atlassian_jira_logo_icon_170511.png" />
+            </Link>
             {themeName === 'light' ? (
               <Box display="block" textAlign="right">
                 <Typography variant="button" display="block" gutterBottom>
@@ -107,7 +110,7 @@ export function AppShell({ children }: MenuProps) {
           </Box>
         </Box>
       </Drawer>
-      <Box height="100vh" marginLeft={theme.spacing(28)}>
+      <Box height="100vh" marginLeft={theme.spacing(35)}>
         {children}
       </Box>
     </>

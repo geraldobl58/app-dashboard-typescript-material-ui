@@ -9,6 +9,7 @@ import PeopleOutlineIcon from '@mui/icons-material/PeopleOutline'
 import { useDrawerContext } from 'contexts/DrawerContext'
 
 const Home = lazy(() => import('pages/Home'))
+const Dashboard = lazy(() => import('pages/Dashboard'))
 
 export const AppRoutes = () => {
   const { setDrawerOptions } = useDrawerContext()
@@ -31,8 +32,8 @@ export const AppRoutes = () => {
   return (
     <Suspense fallback={<LinearProgress />}>
       <Routes>
-        <Route path="/" element={<p>Inicio</p>} />
-        <Route path="/dashboard" element={<Home />} />
+        <Route path="/" element={<Home />} />
+        <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/users" element={<p>Users</p>} />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
