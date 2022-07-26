@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { api } from 'config/api.config'
 
 type UsersProps = {
@@ -8,7 +7,7 @@ type UsersProps = {
   cityId: string
 }
 
-type DetailsProps = {
+type UsersDetailsProps = {
   id: number
   fullname: string
   email: string
@@ -45,18 +44,75 @@ const getAll = async (
   }
 }
 
-// const getById = async (): Promise<any> => {}
+const getById = async (id: number): Promise<UsersDetailsProps | Error> => {
+  try {
+    const { data } = await api.get(`/users/${id}`)
 
-// const create = async (): Promise<any> => {}
+    if (data) {
+      return data
+    }
 
-// const updateById = async (): Promise<any> => {}
+    return new Error('Whopps: Houve um erro ao carregar o registro.')
+  } catch (error) {
+    console.error(error)
+    return new Error(
+      (error as { message: string }).message ||
+        'Whopps: Houve um erro ao carregar o registro.'
+    )
+  }
+}
 
-// const deleteById = async (): Promise<any> => {}
+const create = async (
+  dataUsers: Omit<UsersDetailsProps, 'id'>
+): Promise<number | Error> => {
+  try {
+    const { data } = await api.post<UsersDetailsProps>('/users', dataUsers)
+
+    if (data) {
+      return data.id
+    }
+
+    return new Error('Whopps: Houve um erro ao cadastrar o usuário.')
+  } catch (error) {
+    console.error(error)
+    return new Error(
+      (error as { message: string }).message ||
+        'Whopps: Houve um erro ao cadastrar o usuário.'
+    )
+  }
+}
+
+const updateById = async (
+  id: number,
+  dataUsers: UsersDetailsProps
+): Promise<void | Error> => {
+  try {
+    await api.put(`/users/${id}`, dataUsers)
+  } catch (error) {
+    console.error(error)
+    return new Error(
+      (error as { message: string }).message ||
+        'Whopps: Houve um erro ao atualizar o registro.'
+    )
+  }
+}
+
+const deleteById = async (id: number): Promise<void | Error> => {
+  try {
+    await api.delete(`/users/${id}`)
+  } catch (error) {
+    console.error(error)
+    return new Error(
+      (error as { message: string }).message ||
+        'Whopps: Houve um erro ao excluir o registro.'
+    )
+  }
+}
 
 export const Users = {
-  getAll
-  // getById,
-  // create,
-  // updateById,
-  // deleteById
+  getAll,
+  getById,
+  create,
+  updateById,
+  deleteById
 }
