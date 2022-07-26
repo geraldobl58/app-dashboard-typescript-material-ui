@@ -2,8 +2,8 @@
   "users": [
     {
       "id": 1,
-      "firstname": "John",
-      "lastname": "Doe"
+      "fullname": "John Doe",
+      "email": "johndoe@email"
     }
   ]
 }
