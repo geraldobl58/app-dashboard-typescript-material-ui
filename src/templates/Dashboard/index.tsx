@@ -7,7 +7,7 @@ import { Base } from 'templates/Base'
 export function DashboardTemplate() {
   return (
     <Base>
-      <ToolBox />
+      <ToolBox showButtonSaveAndClose />
       <Typography variant="h6" component="div">
         DashboardTemplate
       </Typography>

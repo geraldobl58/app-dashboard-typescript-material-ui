@@ -5,7 +5,37 @@ import AddCircleIcon from '@mui/icons-material/AddCircle'
 import DeleteIcon from '@mui/icons-material/Delete'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 
-export function ToolBox() {
+type ToolBoxProps = {
+  textButtonNew?: string
+
+  showButtonNew?: boolean
+  showButtonBack?: boolean
+  showButtonDelete?: boolean
+  showButtonSave?: boolean
+  showButtonSaveAndClose?: boolean
+
+  buttonClickNew?: () => void
+  buttonClickBack?: () => void
+  buttonClickDelete?: () => void
+  buttonClickSave?: () => void
+  buttonClickSaveAndClose?: () => void
+}
+
+export function ToolBox({
+  textButtonNew = 'Novo',
+
+  showButtonNew = true,
+  showButtonBack = true,
+  showButtonDelete = true,
+  showButtonSave = true,
+  showButtonSaveAndClose = false,
+
+  buttonClickNew,
+  buttonClickBack,
+  buttonClickDelete,
+  buttonClickSave,
+  buttonClickSaveAndClose
+}: ToolBoxProps) {
   return (
     <Box
       gap={1}
@@ -15,21 +45,60 @@ export function ToolBox() {
       alignItems="center"
       component={Paper}
     >
-      <Button variant="contained" color="primary" endIcon={<SaveIcon />}>
-        Salvar
-      </Button>
-      <Button variant="outlined" color="primary" endIcon={<SaveIcon />}>
-        Salvar e Voltar
-      </Button>
-      <Button variant="outlined" color="primary" endIcon={<DeleteIcon />}>
-        Apagar
-      </Button>
-      <Button variant="outlined" color="primary" endIcon={<AddCircleIcon />}>
-        Novo
-      </Button>
-      <Button variant="outlined" color="primary" endIcon={<ArrowBackIcon />}>
-        Voltar
-      </Button>
+      {showButtonSave && (
+        <Button
+          variant="contained"
+          color="primary"
+          endIcon={<SaveIcon />}
+          onClick={buttonClickSave}
+        >
+          Salvar
+        </Button>
+      )}
+
+      {showButtonSaveAndClose && (
+        <Button
+          variant="outlined"
+          color="primary"
+          endIcon={<SaveIcon />}
+          onClick={buttonClickSaveAndClose}
+        >
+          Salvar e Voltar
+        </Button>
+      )}
+
+      {showButtonDelete && (
+        <Button
+          variant="outlined"
+          color="primary"
+          endIcon={<DeleteIcon />}
+          onClick={buttonClickDelete}
+        >
+          Apagar
+        </Button>
+      )}
+
+      {showButtonNew && (
+        <Button
+          variant="outlined"
+          color="primary"
+          endIcon={<AddCircleIcon />}
+          onClick={buttonClickNew}
+        >
+          {textButtonNew}
+        </Button>
+      )}
+
+      {showButtonBack && (
+        <Button
+          variant="outlined"
+          color="primary"
+          endIcon={<ArrowBackIcon />}
+          onClick={buttonClickBack}
+        >
+          Voltar
+        </Button>
+      )}
     </Box>
   )
 }
