@@ -1,13 +1,13 @@
 import { Typography } from '@mui/material'
 
-import { ToolBar } from 'components/ToolBar'
+import { ToolBox } from 'components/ToolBox'
 
 import { Base } from 'templates/Base'
 
 export function DashboardTemplate() {
   return (
     <Base>
-      <ToolBar textInputShowSearch textNewButton="Nova" />
+      <ToolBox />
       <Typography variant="h6" component="div">
         DashboardTemplate
       </Typography>
