@@ -5,11 +5,13 @@ import { LinearProgress } from '@mui/material'
 
 import GridViewIcon from '@mui/icons-material/GridView'
 import PeopleOutlineIcon from '@mui/icons-material/PeopleOutline'
+import SupportAgentIcon from '@mui/icons-material/SupportAgent'
 
 import { useDrawerContext } from 'contexts/DrawerContext'
 
 const Home = lazy(() => import('pages/Home'))
 const Dashboard = lazy(() => import('pages/Dashboard'))
+const Location = lazy(() => import('pages/Location'))
 
 export const AppRoutes = () => {
   const { setDrawerOptions } = useDrawerContext()
@@ -25,6 +27,11 @@ export const AppRoutes = () => {
         icon: <PeopleOutlineIcon />,
         path: '/users',
         label: 'Usuários'
+      },
+      {
+        icon: <SupportAgentIcon />,
+        path: '/location',
+        label: 'Clientes'
       }
     ])
   }, [setDrawerOptions])
@@ -35,6 +42,7 @@ export const AppRoutes = () => {
         <Route path="/" element={<Home />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/users" element={<p>Users</p>} />
+        <Route path="/location" element={<Location />} />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </Suspense>

@@ -4,14 +4,14 @@ type UsersProps = {
   id: number
   fullname: string
   email: string
-  cityId: string
+  locationId: string
 }
 
 type UsersDetailsProps = {
   id: number
   fullname: string
   email: string
-  cityId: string
+  locationId: string
 }
 
 type UsersTotalCount = {
