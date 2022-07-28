@@ -3,7 +3,8 @@
     {
       "id": 1,
       "fullname": "John Doe",
-      "email": "johndoe@email"
+      "email": "johndoe@email",
+      "location": 1
     }
   ]
 }
