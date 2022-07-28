@@ -24,7 +24,7 @@ const getAll = async (
   filter = ''
 ): Promise<UsersTotalCount | Error> => {
   try {
-    const url = `/users/${page}&_limit=10?&firstname_like=${filter}`
+    const url = `/users?_page=${page}&_limit=10?&fullname_like=${filter}`
     const { data, headers } = await api.get(url)
 
     if (data) {
