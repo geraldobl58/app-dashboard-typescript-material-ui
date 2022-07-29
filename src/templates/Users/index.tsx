@@ -3,6 +3,8 @@ import { useSearchParams } from 'react-router-dom'
 
 import {
   Alert,
+  Box,
+  LinearProgress,
   Paper,
   Snackbar,
   Table,
@@ -28,9 +30,6 @@ export function UserTemplate() {
   const [rows, setRows] = useState<UsersProps[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [totalCount, setTotalCount] = useState(0)
-
-  console.log(isLoading)
-  console.log(totalCount)
 
   const { debounce } = useDebounce()
 
@@ -100,7 +99,15 @@ export function UserTemplate() {
             ))}
           </TableBody>
         </Table>
+        <Box>{isLoading && <LinearProgress variant="indeterminate" />}</Box>
       </TableContainer>
+
+      <Box>
+        {totalCount === 0 && !isLoading && (
+          <Alert severity="info"> Nenhum registro encontrado!</Alert>
+        )}
+      </Box>
+
       {error && (
         <Snackbar
           open={open}
