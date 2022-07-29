@@ -1,5 +1,7 @@
 import { api } from 'config/api.config'
 
+import { environment } from 'utils/environment'
+
 export type UsersProps = {
   id: number
   fullname: string
@@ -24,7 +26,7 @@ const getAll = async (
   filter = ''
 ): Promise<UsersTotalCount | Error> => {
   try {
-    const url = `/users?_page=${page}&_limit=10?&fullname_like=${filter}`
+    const url = `/users?_page=${page}&_limit=${environment.pagination}?&fullname_like=${filter}`
     const { data, headers } = await api.get(url)
 
     if (data) {

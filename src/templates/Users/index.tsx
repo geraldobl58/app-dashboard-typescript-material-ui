@@ -3,8 +3,8 @@ import { useSearchParams } from 'react-router-dom'
 
 import {
   Alert,
-  Box,
   LinearProgress,
+  Pagination,
   Paper,
   Snackbar,
   Table,
@@ -23,6 +23,8 @@ import { useDebounce } from 'hooks/useDebounce'
 
 import { Users, UsersProps } from 'services/Users'
 
+import { environment } from 'utils/environment'
+
 export function UserTemplate() {
   const [error, setError] = useState(false)
   const [open, setOpen] = useState(false)
@@ -39,6 +41,10 @@ export function UserTemplate() {
     return searchParams.get('search') || ''
   }, [searchParams])
 
+  const pagination = useMemo(() => {
+    return Number(searchParams.get('page') || '1')
+  }, [searchParams])
+
   const handleClose = (
     event?: React.SyntheticEvent | Event,
     reason?: string
@@ -53,7 +59,7 @@ export function UserTemplate() {
   useEffect(() => {
     setIsLoading(true)
     debounce(() => {
-      Users.getAll(1, search).then((response) => {
+      Users.getAll(pagination, search).then((response) => {
         setIsLoading(false)
         if (response instanceof Error) {
           setError(true)
@@ -64,7 +70,7 @@ export function UserTemplate() {
         }
       })
     })
-  }, [search, debounce])
+  }, [search, debounce, pagination])
 
   return (
     <Base>
@@ -73,7 +79,7 @@ export function UserTemplate() {
         textNewButton="Nova"
         textInputSearch={search}
         textChangeSearch={(text) =>
-          setSearchParams({ search: text }, { replace: true })
+          setSearchParams({ search: text, page: '1' }, { replace: true })
         }
       />
       <TableContainer
@@ -97,16 +103,42 @@ export function UserTemplate() {
                 <TableCell>Ações</TableCell>
               </TableRow>
             ))}
+            {totalCount > 0 && totalCount > environment.pagination && (
+              <TableRow>
+                <TableCell colSpan={3}>
+                  <Pagination
+                    variant="outlined"
+                    shape="rounded"
+                    page={pagination}
+                    count={Math.ceil(totalCount / environment.pagination)}
+                    onChange={(event, newPage) =>
+                      setSearchParams(
+                        { search, page: newPage.toString() },
+                        { replace: true }
+                      )
+                    }
+                  />
+                </TableCell>
+              </TableRow>
+            )}
+            {isLoading && (
+              <TableRow>
+                <TableCell colSpan={3}>
+                  {isLoading && <LinearProgress variant="indeterminate" />}
+                </TableCell>
+              </TableRow>
+            )}
+
+            {totalCount === 0 && !isLoading && (
+              <TableRow>
+                <TableCell colSpan={3}>
+                  <Alert severity="info"> Nenhum registro encontrado!</Alert>
+                </TableCell>
+              </TableRow>
+            )}
           </TableBody>
         </Table>
-        <Box>{isLoading && <LinearProgress variant="indeterminate" />}</Box>
       </TableContainer>
-
-      <Box>
-        {totalCount === 0 && !isLoading && (
-          <Alert severity="info"> Nenhum registro encontrado!</Alert>
-        )}
-      </Box>
 
       {error && (
         <Snackbar
