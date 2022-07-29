@@ -1,18 +1,6 @@
 {
   "users": [
     {
-      "id": 1,
-      "fullname": "John Doe",
-      "email": "johndoe@email",
-      "location": 1
-    },
-    {
-      "id": 2,
-      "fullname": "Jane Doe",
-      "email": "janedoe@email",
-      "location": 1
-    },
-    {
       "id": 3,
       "fullname": "Mark Miller",
       "email": "markmiller@email",
@@ -20,26 +8,8 @@
     },
     {
       "id": 4,
-      "fullname": "Vuorrur",
-      "email": "vuorrur@email",
-      "location": 1
-    },
-    {
-      "id": 5,
-      "fullname": "Wokai",
-      "email": "wokai@email",
-      "location": 1
-    },
-    {
-      "id": 6,
-      "fullname": "Niasa",
-      "email": "niasa@email",
-      "location": 1
-    },
-    {
-      "id": 7,
-      "fullname": "Haupe",
-      "email": "haupe@email",
+      "fullname": "John Doe",
+      "email": "johndoe@email",
       "location": 1
     }
   ]

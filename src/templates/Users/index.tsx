@@ -3,6 +3,7 @@ import { useSearchParams } from 'react-router-dom'
 
 import {
   Alert,
+  IconButton,
   LinearProgress,
   Pagination,
   Paper,
@@ -14,6 +15,9 @@ import {
   TableHead,
   TableRow
 } from '@mui/material'
+
+import EditIcon from '@mui/icons-material/Edit'
+import DeleteIcon from '@mui/icons-material/Delete'
 
 import { ToolBar } from 'components/ToolBar'
 
@@ -56,6 +60,22 @@ export function UserTemplate() {
     setOpen(false)
   }
 
+  const handleDelete = (id: number) => {
+    if (confirm('Deseja relamente excluir este registro?')) {
+      Users.deleteById(id).then((response) => {
+        if (response instanceof Error) {
+          setError(true)
+          setOpen(true)
+        } else {
+          setRows((oldRows) => [
+            ...oldRows.filter((oldRow) => oldRow.id !== id)
+          ])
+          alert('Registro excluir com sucesso!')
+        }
+      })
+    }
+  }
+
   useEffect(() => {
     setIsLoading(true)
     debounce(() => {
@@ -87,7 +107,7 @@ export function UserTemplate() {
         variant="outlined"
         style={{ margin: '10px 0' }}
       >
-        <Table>
+        <Table size="small">
           <TableHead>
             <TableRow>
               <TableCell>Nome</TableCell>
@@ -100,7 +120,14 @@ export function UserTemplate() {
               <TableRow key={row.id}>
                 <TableCell>{row.fullname}</TableCell>
                 <TableCell>{row.email}</TableCell>
-                <TableCell>Ações</TableCell>
+                <TableCell>
+                  <IconButton size="small">
+                    <EditIcon />
+                  </IconButton>
+                  <IconButton size="small" onClick={() => handleDelete(row.id)}>
+                    <DeleteIcon />
+                  </IconButton>
+                </TableCell>
               </TableRow>
             ))}
             {totalCount > 0 && totalCount > environment.pagination && (
