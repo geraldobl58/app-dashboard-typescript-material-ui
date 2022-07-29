@@ -1,13 +1,13 @@
 import { api } from 'config/api.config'
 
-type UsersProps = {
+export type UsersProps = {
   id: number
   fullname: string
   email: string
   locationId: string
 }
 
-type UsersDetailsProps = {
+export type UsersDetailsProps = {
   id: number
   fullname: string
   email: string

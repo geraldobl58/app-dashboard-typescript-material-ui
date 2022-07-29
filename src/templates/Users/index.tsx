@@ -1,7 +1,17 @@
 import { useMemo, useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 
-import { Alert, Snackbar, Typography } from '@mui/material'
+import {
+  Alert,
+  Paper,
+  Snackbar,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow
+} from '@mui/material'
 
 import { ToolBar } from 'components/ToolBar'
 
@@ -9,13 +19,20 @@ import { Base } from 'templates/Base'
 
 import { useDebounce } from 'hooks/useDebounce'
 
-import { Users } from 'services/Users'
+import { Users, UsersProps } from 'services/Users'
 
 export function UserTemplate() {
   const [error, setError] = useState(false)
   const [open, setOpen] = useState(false)
 
-  const { debounce } = useDebounce(3000, false)
+  const [rows, setRows] = useState<UsersProps[]>([])
+  const [isLoading, setIsLoading] = useState(true)
+  const [totalCount, setTotalCount] = useState(0)
+
+  console.log(isLoading)
+  console.log(totalCount)
+
+  const { debounce } = useDebounce()
 
   const [searchParams, setSearchParams] = useSearchParams()
 
@@ -35,13 +52,16 @@ export function UserTemplate() {
   }
 
   useEffect(() => {
+    setIsLoading(true)
     debounce(() => {
       Users.getAll(1, search).then((response) => {
+        setIsLoading(false)
         if (response instanceof Error) {
           setError(true)
           setOpen(true)
         } else {
-          console.log(response)
+          setTotalCount(response.totalCount)
+          setRows(response.data)
         }
       })
     })
@@ -57,9 +77,30 @@ export function UserTemplate() {
           setSearchParams({ search: text }, { replace: true })
         }
       />
-      <Typography variant="h6" component="div">
-        UserTemplate
-      </Typography>
+      <TableContainer
+        component={Paper}
+        variant="outlined"
+        style={{ margin: '10px 0' }}
+      >
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>Nome</TableCell>
+              <TableCell>Email</TableCell>
+              <TableCell>Ações</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {rows.map((row) => (
+              <TableRow key={row.id}>
+                <TableCell>{row.fullname}</TableCell>
+                <TableCell>{row.email}</TableCell>
+                <TableCell>Ações</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
       {error && (
         <Snackbar
           open={open}
