@@ -1,5 +1,5 @@
 import { useMemo, useEffect, useState } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 
 import {
   Alert,
@@ -36,6 +36,8 @@ export function UserTemplate() {
   const [rows, setRows] = useState<UsersProps[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [totalCount, setTotalCount] = useState(0)
+
+  const navigate = useNavigate()
 
   const { debounce } = useDebounce()
 
@@ -101,6 +103,7 @@ export function UserTemplate() {
         textChangeSearch={(text) =>
           setSearchParams({ search: text, page: '1' }, { replace: true })
         }
+        textNewCkickButton={() => navigate(`/users/details/new`)}
       />
       <TableContainer
         component={Paper}
@@ -121,7 +124,10 @@ export function UserTemplate() {
                 <TableCell>{row.fullname}</TableCell>
                 <TableCell>{row.email}</TableCell>
                 <TableCell>
-                  <IconButton size="small">
+                  <IconButton
+                    size="small"
+                    onClick={() => navigate(`/users/details/${row.id}`)}
+                  >
                     <EditIcon />
                   </IconButton>
                   <IconButton size="small" onClick={() => handleDelete(row.id)}>

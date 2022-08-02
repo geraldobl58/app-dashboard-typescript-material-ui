@@ -12,6 +12,7 @@ import { useDrawerContext } from 'contexts/DrawerContext'
 const Home = lazy(() => import('pages/Home'))
 const Dashboard = lazy(() => import('pages/Dashboard'))
 const Users = lazy(() => import('pages/Users'))
+const Details = lazy(() => import('pages/Details'))
 
 export const AppRoutes = () => {
   const { setDrawerOptions } = useDrawerContext()
@@ -42,6 +43,7 @@ export const AppRoutes = () => {
         <Route path="/" element={<Home />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/users" element={<Users />} />
+        <Route path="/users/details/:id" element={<Details />} />
         <Route path="/location" element={<p>Users</p>} />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
