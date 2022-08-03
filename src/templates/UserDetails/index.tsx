@@ -1,23 +1,36 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
+import { LinearProgress, Paper, Typography } from '@mui/material'
+
+import { FormHandles } from '@unform/core'
+import { Form } from '@unform/web'
+
 import { ToolBox } from 'components/ToolBox'
+import { VTextField } from 'components/VTextField'
 
 import { Base } from 'templates/Base'
 
 import { Users } from 'services/Users'
-import { LinearProgress, Paper, Typography } from '@mui/material'
+
+type FormDataProps = {
+  fullname: string
+  email: string
+  locationId: string
+}
 
 export function UserDetails() {
   const [isLoading, setIsLoading] = useState(false)
   const [fullName, setFullName] = useState('')
 
+  const formRef = useRef<FormHandles>(null)
+
   const { id = 'new' } = useParams<'id'>()
 
   const navigate = useNavigate()
 
-  const handleSave = () => {
-    console.log('handleSave')
+  const handleSave = (data: FormDataProps) => {
+    console.log(data)
   }
 
   const handleDelete = (id: number) => {
@@ -55,8 +68,8 @@ export function UserDetails() {
         showButtonNew={id !== 'new'}
         showButtonDelete={id !== 'new'}
         //
-        buttonClickSave={handleSave}
-        buttonClickSaveAndClose={handleSave}
+        buttonClickSave={() => formRef.current?.submitForm()}
+        buttonClickSaveAndClose={() => formRef.current?.submitForm()}
         buttonClickDelete={() => handleDelete(Number(id))}
         buttonClickNew={() => navigate(`/users/details/new`)}
         buttonClickBack={() => navigate(`/users/`)}
@@ -66,7 +79,13 @@ export function UserDetails() {
           {id === 'new' ? 'Novo Registro' : `Editando o registro [${fullName}]`}
         </Typography>
       </Paper>
-      {isLoading && <LinearProgress variant="indeterminate" />}
+      <Form ref={formRef} onSubmit={handleSave}>
+        <VTextField name="fullname" />
+        <VTextField name="email" />
+        <VTextField name="location" />
+      </Form>
+      {console.log(isLoading)}
+      <LinearProgress />
     </Base>
   )
 }
