@@ -16,7 +16,7 @@ import { Users } from 'services/Users'
 type FormDataProps = {
   fullname: string
   email: string
-  locationId: string
+  locationId: number
 }
 
 export function UserDetails() {
@@ -30,7 +30,26 @@ export function UserDetails() {
   const navigate = useNavigate()
 
   const handleSave = (data: FormDataProps) => {
-    console.log(data)
+    setIsLoading(true)
+    if (id === 'new') {
+      Users.create(data).then((response) => {
+        setIsLoading(false)
+        if (response instanceof Error) {
+          alert(response.message)
+        } else {
+          navigate(`/users/details/${response}`)
+        }
+      })
+    } else {
+      Users.updateById(Number(id), { id: Number(id), ...data }).then(
+        (response) => {
+          setIsLoading(false)
+          if (response instanceof Error) {
+            alert(response.message)
+          }
+        }
+      )
+    }
   }
 
   const handleDelete = (id: number) => {
@@ -55,6 +74,7 @@ export function UserDetails() {
           navigate(`/users/`)
         } else {
           setFullName(response.fullname)
+          formRef.current?.setData(response)
         }
       })
     }
@@ -80,12 +100,11 @@ export function UserDetails() {
         </Typography>
       </Paper>
       <Form ref={formRef} onSubmit={handleSave}>
-        <VTextField name="fullname" />
-        <VTextField name="email" />
-        <VTextField name="location" />
+        <VTextField placeholder="Nome Completo" name="fullname" />
+        <VTextField placeholder="E-mail" name="email" />
+        <VTextField placeholder="Local Id" name="locationId" />
       </Form>
-      {console.log(isLoading)}
-      <LinearProgress />
+      {isLoading && <LinearProgress variant="indeterminate" />}
     </Base>
   )
 }

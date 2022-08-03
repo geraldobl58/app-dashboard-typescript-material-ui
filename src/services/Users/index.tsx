@@ -6,14 +6,14 @@ export type UsersProps = {
   id: number
   fullname: string
   email: string
-  locationId: string
+  locationId: number
 }
 
 export type UsersDetailsProps = {
   id: number
   fullname: string
   email: string
-  locationId: string
+  locationId: number
 }
 
 type UsersTotalCount = {
