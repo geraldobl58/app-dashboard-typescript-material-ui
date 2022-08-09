@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
-import { LinearProgress, Paper, Typography } from '@mui/material'
+import { Box, Grid, LinearProgress, Paper, Typography } from '@mui/material'
 
 import { FormHandles } from '@unform/core'
 import { Form } from '@unform/web'
@@ -100,9 +100,47 @@ export function UserDetails() {
         </Typography>
       </Paper>
       <Form ref={formRef} onSubmit={handleSave}>
-        <VTextField placeholder="Nome Completo" name="fullname" />
-        <VTextField placeholder="E-mail" name="email" />
-        <VTextField placeholder="Local Id" name="locationId" />
+        <Box
+          margin={1}
+          display="flex"
+          flexDirection="column"
+          component={Paper}
+          variant="outlined"
+        >
+          <Grid container direction="column" padding={2} spacing={2}>
+            <Grid container item direction="row" spacing={2}>
+              <Grid item xs={12}>
+                <VTextField
+                  label="Nome Completo"
+                  name="fullname"
+                  fullWidth
+                  disabled={isLoading}
+                  onChange={(event) => setFullName(event.target.value)}
+                />
+              </Grid>
+            </Grid>
+            <Grid container item direction="row" spacing={2}>
+              <Grid item xs={12}>
+                <VTextField
+                  label="E-mail"
+                  name="email"
+                  fullWidth
+                  disabled={isLoading}
+                />
+              </Grid>
+            </Grid>
+            <Grid container item direction="row" spacing={2}>
+              <Grid item xs={12}>
+                <VTextField
+                  label="Local"
+                  name="locationId"
+                  fullWidth
+                  disabled={isLoading}
+                />
+              </Grid>
+            </Grid>
+          </Grid>
+        </Box>
       </Form>
       {isLoading && <LinearProgress variant="indeterminate" />}
     </Base>

@@ -28,9 +28,15 @@ export function VTextField({ name, ...rest }: VTextFieldProps) {
       error={!!error}
       helperText={error}
       defaultValue={defaultValue}
-      onKeyDown={() => (error ? clearError() : undefined)}
       value={value}
-      onChange={(event) => setValue(event.target.value)}
+      onChange={(event) => {
+        setValue(event.target.value)
+        rest.onChange?.(event)
+      }}
+      onKeyDown={(event) => {
+        error && clearError()
+        rest.onKeyDown?.(event)
+      }}
     />
   )
 }

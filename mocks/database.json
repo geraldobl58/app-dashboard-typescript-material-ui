@@ -4,13 +4,13 @@
       "id": 3,
       "fullname": "Mark Miller",
       "email": "markmiller@email",
-      "location": 1
+      "locationId": 1
     },
     {
       "id": 4,
       "fullname": "John Doe",
       "email": "johndoe@email",
-      "location": 1
+      "locationId": 1
     },
     {
       "id": 5,
