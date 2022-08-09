@@ -1,9 +1,8 @@
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
 import { Box, Grid, LinearProgress, Paper, Typography } from '@mui/material'
 
-import { FormHandles } from '@unform/core'
 import { Form } from '@unform/web'
 
 import { ToolBox } from 'components/ToolBox'
@@ -13,6 +12,8 @@ import { Base } from 'templates/Base'
 
 import { Users } from 'services/Users'
 
+import { useVForm } from 'hooks/useVForm'
+
 type FormDataProps = {
   fullname: string
   email: string
@@ -21,9 +22,9 @@ type FormDataProps = {
 
 export function UserDetails() {
   const [isLoading, setIsLoading] = useState(false)
-  const [fullName, setFullName] = useState('')
+  const [fullname, setFullname] = useState('')
 
-  const formRef = useRef<FormHandles>(null)
+  const { formRef, save, saveAndClose, isSaveAndClose } = useVForm()
 
   const { id = 'new' } = useParams<'id'>()
 
@@ -37,7 +38,11 @@ export function UserDetails() {
         if (response instanceof Error) {
           alert(response.message)
         } else {
-          navigate(`/users/details/${response}`)
+          if (isSaveAndClose()) {
+            navigate(`/users/`)
+          } else {
+            navigate(`/users/details/${response}`)
+          }
         }
       })
     } else {
@@ -46,6 +51,10 @@ export function UserDetails() {
           setIsLoading(false)
           if (response instanceof Error) {
             alert(response.message)
+          } else {
+            if (isSaveAndClose()) {
+              navigate(`/users/`)
+            }
           }
         }
       )
@@ -73,12 +82,18 @@ export function UserDetails() {
         if (response instanceof Error) {
           navigate(`/users/`)
         } else {
-          setFullName(response.fullname)
+          setFullname(response.fullname)
           formRef.current?.setData(response)
         }
       })
+    } else {
+      formRef.current?.setData({
+        fullname: '',
+        email: '',
+        locationId: ''
+      })
     }
-  }, [id, navigate])
+  }, [id, navigate, formRef])
 
   return (
     <Base>
@@ -88,15 +103,15 @@ export function UserDetails() {
         showButtonNew={id !== 'new'}
         showButtonDelete={id !== 'new'}
         //
-        buttonClickSave={() => formRef.current?.submitForm()}
-        buttonClickSaveAndClose={() => formRef.current?.submitForm()}
+        buttonClickSave={save}
+        buttonClickSaveAndClose={saveAndClose}
         buttonClickDelete={() => handleDelete(Number(id))}
         buttonClickNew={() => navigate(`/users/details/new`)}
         buttonClickBack={() => navigate(`/users/`)}
       />
       <Paper>
         <Typography variant="h6" component="div" p={2}>
-          {id === 'new' ? 'Novo Registro' : `Editando o registro [${fullName}]`}
+          {id === 'new' ? 'Novo Registro' : `Editando o registro [${fullname}]`}
         </Typography>
       </Paper>
       <Form ref={formRef} onSubmit={handleSave}>
@@ -115,7 +130,7 @@ export function UserDetails() {
                   name="fullname"
                   fullWidth
                   disabled={isLoading}
-                  onChange={(event) => setFullName(event.target.value)}
+                  onChange={(event) => setFullname(event.target.value)}
                 />
               </Grid>
             </Grid>

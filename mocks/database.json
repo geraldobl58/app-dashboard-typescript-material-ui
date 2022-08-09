@@ -1,12 +1,6 @@
 {
   "users": [
     {
-      "id": 3,
-      "fullname": "Mark Miller",
-      "email": "markmiller@email",
-      "locationId": 1
-    },
-    {
       "id": 4,
       "fullname": "John Doe",
       "email": "johndoe@email",
@@ -16,6 +10,12 @@
       "id": 5,
       "fullname": "Jane Doe",
       "email": "janedoe@email.com",
+      "locationId": "1"
+    },
+    {
+      "id": 6,
+      "fullname": "Mark Miller",
+      "email": "markmiller@email.com",
       "locationId": "1"
     }
   ]
