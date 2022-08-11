@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
+import * as yup from 'yup'
+
 import { Box, Grid, LinearProgress, Paper, Typography } from '@mui/material'
 
 import { Form } from '@unform/web'
@@ -20,6 +22,12 @@ type FormDataProps = {
   locationId: number
 }
 
+const formValidationSchema: yup.SchemaOf<FormDataProps> = yup.object().shape({
+  fullname: yup.string().required().min(3),
+  email: yup.string().required().email(),
+  locationId: yup.number().required()
+})
+
 export function UserDetails() {
   const [isLoading, setIsLoading] = useState(false)
   const [fullname, setFullname] = useState('')
@@ -31,34 +39,50 @@ export function UserDetails() {
   const navigate = useNavigate()
 
   const handleSave = (data: FormDataProps) => {
-    setIsLoading(true)
-    if (id === 'new') {
-      Users.create(data).then((response) => {
-        setIsLoading(false)
-        if (response instanceof Error) {
-          alert(response.message)
+    formValidationSchema
+      .validate(data, { abortEarly: false })
+      .then((validateData) => {
+        setIsLoading(true)
+        if (id === 'new') {
+          Users.create(validateData).then((response) => {
+            setIsLoading(false)
+            if (response instanceof Error) {
+              alert(response.message)
+            } else {
+              if (isSaveAndClose()) {
+                navigate(`/users/`)
+              } else {
+                navigate(`/users/details/${response}`)
+              }
+            }
+          })
         } else {
-          if (isSaveAndClose()) {
-            navigate(`/users/`)
-          } else {
-            navigate(`/users/details/${response}`)
-          }
+          Users.updateById(Number(id), {
+            id: Number(id),
+            ...validateData
+          }).then((response) => {
+            setIsLoading(false)
+            if (response instanceof Error) {
+              alert(response.message)
+            } else {
+              if (isSaveAndClose()) {
+                navigate(`/users/`)
+              }
+            }
+          })
         }
       })
-    } else {
-      Users.updateById(Number(id), { id: Number(id), ...data }).then(
-        (response) => {
-          setIsLoading(false)
-          if (response instanceof Error) {
-            alert(response.message)
-          } else {
-            if (isSaveAndClose()) {
-              navigate(`/users/`)
-            }
-          }
-        }
-      )
-    }
+      .catch((errors: yup.ValidationError) => {
+        const validationErrors: { [key: string]: string } = {}
+
+        errors.inner.forEach((error) => {
+          if (!error.path) return
+
+          validationErrors[error.path] = error.message
+        })
+
+        formRef.current?.setErrors(validationErrors)
+      })
   }
 
   const handleDelete = (id: number) => {

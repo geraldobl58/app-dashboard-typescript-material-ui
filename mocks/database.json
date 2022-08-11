@@ -2,7 +2,7 @@
   "users": [
     {
       "id": 4,
-      "fullname": "John Doe",
+      "fullname": "",
       "email": "johndoe@email",
       "locationId": 1
     },
