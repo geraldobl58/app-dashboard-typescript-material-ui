@@ -17,6 +17,12 @@
       "fullname": "Mark Miller",
       "email": "markmiller@email.com",
       "locationId": 4
+    },
+    {
+      "id": 7,
+      "fullname": "Geraldo",
+      "email": "geraldo@email.com",
+      "locationId": 4
     }
   ],
   "locations": [

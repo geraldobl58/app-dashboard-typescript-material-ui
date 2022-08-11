@@ -115,7 +115,7 @@ export function UserDetails() {
       formRef.current?.setData({
         fullname: '',
         email: '',
-        locationId: ''
+        locationId: undefined
       })
     }
   }, [id, navigate, formRef])
