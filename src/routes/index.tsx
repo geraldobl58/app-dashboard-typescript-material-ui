@@ -10,9 +10,14 @@ import SupportAgentIcon from '@mui/icons-material/SupportAgent'
 import { useDrawerContext } from 'contexts/DrawerContext'
 
 const Home = lazy(() => import('pages/Home'))
+
 const Dashboard = lazy(() => import('pages/Dashboard'))
+
 const Users = lazy(() => import('pages/Users'))
 const Details = lazy(() => import('pages/Details'))
+
+const Location = lazy(() => import('pages/Location'))
+const LocationDetails = lazy(() => import('pages/LocationDetails'))
 
 export const AppRoutes = () => {
   const { setDrawerOptions } = useDrawerContext()
@@ -31,8 +36,8 @@ export const AppRoutes = () => {
       },
       {
         icon: <SupportAgentIcon />,
-        path: '/location',
-        label: 'Clientes'
+        path: '/locations',
+        label: 'Cidades'
       }
     ])
   }, [setDrawerOptions])
@@ -44,7 +49,8 @@ export const AppRoutes = () => {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/users" element={<Users />} />
         <Route path="/users/details/:id" element={<Details />} />
-        <Route path="/location" element={<p>Users</p>} />
+        <Route path="/locations" element={<Location />} />
+        <Route path="/locations/details/:id" element={<LocationDetails />} />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </Suspense>

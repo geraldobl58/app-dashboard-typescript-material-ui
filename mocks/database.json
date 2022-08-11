@@ -2,8 +2,8 @@
   "users": [
     {
       "id": 4,
-      "fullname": "",
-      "email": "johndoe@email",
+      "fullname": "John Doe",
+      "email": "johndoe@email.com",
       "locationId": 1
     },
     {
@@ -17,6 +17,20 @@
       "fullname": "Mark Miller",
       "email": "markmiller@email.com",
       "locationId": "1"
+    }
+  ],
+  "locations": [
+    {
+      "id": 1,
+      "name": "São Paulo"
+    },
+    {
+      "name": "Minas Gerais",
+      "id": 2
+    },
+    {
+      "name": "Santa Catarina",
+      "id": 3
     }
   ]
 }
