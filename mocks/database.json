@@ -10,13 +10,13 @@
       "id": 5,
       "fullname": "Jane Doe",
       "email": "janedoe@email.com",
-      "locationId": "1"
+      "locationId": 3
     },
     {
       "id": 6,
       "fullname": "Mark Miller",
       "email": "markmiller@email.com",
-      "locationId": "1"
+      "locationId": 4
     }
   ],
   "locations": [
@@ -31,6 +31,18 @@
     {
       "name": "Santa Catarina",
       "id": 3
+    },
+    {
+      "name": "Rio de Janeiro",
+      "id": 4
+    },
+    {
+      "name": "Rio Grande do Sul",
+      "id": 5
+    },
+    {
+      "name": "Sergipe",
+      "id": 6
     }
   ]
 }

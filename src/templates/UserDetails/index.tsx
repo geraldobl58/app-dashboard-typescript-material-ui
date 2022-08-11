@@ -9,6 +9,7 @@ import { Form } from '@unform/web'
 
 import { ToolBox } from 'components/ToolBox'
 import { VTextField } from 'components/VTextField'
+import { AppAutocomplete } from 'components/Autocomplete'
 
 import { Base } from 'templates/Base'
 
@@ -170,12 +171,7 @@ export function UserDetails() {
             </Grid>
             <Grid container item direction="row" spacing={2}>
               <Grid item xs={12}>
-                <VTextField
-                  label="Local"
-                  name="locationId"
-                  fullWidth
-                  disabled={isLoading}
-                />
+                <AppAutocomplete isExternalLoading={isLoading} />
               </Grid>
             </Grid>
           </Grid>
